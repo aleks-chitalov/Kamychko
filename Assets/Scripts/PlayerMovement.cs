@@ -79,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
             Rigidbody2D hit = collision.GetComponent<Rigidbody2D>();
             if(hit.CompareTag("Enemy"))
             {
-                hit.GetComponent<Enemy>().EnemyStagger(3f);
+                hit.GetComponent<Enemy>().EnemyStagger(1f);
                 hit.GetComponent<Enemy>().TakeDamage(1f);
             }
         }
