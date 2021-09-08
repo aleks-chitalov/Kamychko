@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement1 : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {    
     public enum States {stunned, normal}
     public bool readyDash;
-    public bool readyShoot;
     States playerState;
-    public float movespeed = 5f;
+    public float moveSpeed = 5f;
+    public float dashSpeed = 10f;
     public Rigidbody2D rb;
     Vector2 movement;
     public float chargeTime;
@@ -19,32 +19,25 @@ public class PlayerMovement1 : MonoBehaviour
         playerState = States.normal;
         readyDash = true;
         chargeTime = 0;
-        readyShoot = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
-        if (playerState == States.normal)
-        {
-            rb.MovePosition(rb.position + movement.normalized * movespeed * Time.fixedDeltaTime);
-        }
+        movement.y = Input.GetAxisRaw("Vertical");      
         if (Input.GetKeyDown(KeyCode.Space) && readyDash)
         {
             dashDirection = movement.normalized;
             playerState = States.stunned;
-            readyShoot = true;
         }
         if (Input.GetKey(KeyCode.Space) && readyDash)
         {                       
             chargeTime +=  Time.deltaTime;
         }
-        if (Input.GetKeyUp("space") && readyShoot)
+        if (Input.GetKeyUp("space") && readyDash)
         {
             StartCoroutine(DashCoroutine());
-            readyShoot = false;
         }
         
 
@@ -52,20 +45,19 @@ public class PlayerMovement1 : MonoBehaviour
 
     private void FixedUpdate()
     {
-          
-       
+        if (playerState == States.normal)
+        {
+            rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
+        }      
     }
 
     private IEnumerator DashCoroutine()
     {        
        
-        rb.velocity = dashDirection * Mathf.Clamp(chargeTime,10f,20f);
+        rb.velocity = dashDirection * dashSpeed * Mathf.Clamp(chargeTime,1,3f);
         readyDash = false;
         yield return new WaitForSeconds(0.3f);
-        rb.velocity = new Vector2(0, 0);
-        playerState = States.normal;
-        chargeTime = 0;
-        dashDirection = new Vector2(0, 0);
+        ResetPlayerState();
         StartCoroutine(DashCooldownCouroutine(3f));       
     }
 
@@ -73,6 +65,13 @@ public class PlayerMovement1 : MonoBehaviour
     {
         yield return new WaitForSeconds(seconds);
         readyDash = true;
+    }
+    void ResetPlayerState()
+    {
+        rb.velocity = new Vector2(0, 0);
+        playerState = States.normal;
+        chargeTime = 0;
+        dashDirection = new Vector2(0, 0);
     }
     
     
