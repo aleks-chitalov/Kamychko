@@ -11,14 +11,14 @@ public class PlayerMovement1 : MonoBehaviour
     public float movespeed = 5f;
     public Rigidbody2D rb;
     Vector2 movement;
-    public float framesPressed;
+    public float chargeTime;
     Vector2 dashDirection;
     // Start is called before the first frame update
     void Start()
     {
         playerState = States.normal;
         readyDash = true;
-        framesPressed = 1;
+        chargeTime = 0;
         readyShoot = false;
     }
 
@@ -39,7 +39,7 @@ public class PlayerMovement1 : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Space) && readyDash)
         {                       
-            framesPressed = framesPressed + 0.1f;
+            chargeTime +=  Time.deltaTime;
         }
         if (Input.GetKeyUp("space") && readyShoot)
         {
@@ -59,12 +59,12 @@ public class PlayerMovement1 : MonoBehaviour
     private IEnumerator DashCoroutine()
     {        
        
-        rb.velocity = dashDirection * Mathf.Clamp(framesPressed,10f,20f);
+        rb.velocity = dashDirection * Mathf.Clamp(chargeTime,10f,20f);
         readyDash = false;
         yield return new WaitForSeconds(0.3f);
         rb.velocity = new Vector2(0, 0);
         playerState = States.normal;
-        framesPressed = 0;
+        chargeTime = 0;
         dashDirection = new Vector2(0, 0);
         StartCoroutine(DashCooldownCouroutine(3f));       
     }
