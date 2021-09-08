@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 194937214}
   - component: {fileID: 194937213}
   - component: {fileID: 194937217}
+  - component: {fileID: 194937218}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -155,9 +156,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0e827a8fa0c6d49bd76b34d2473098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
+  enemyMaxHealth: 3
+  enemyHealth: 3
+  enemyName: 
+  enemyBaseAttack: 0
+  enemyMoveSpeed: 2
   chaseRadius: 20
   attackRadius: 0
-  enemySpeed: 2
   targetPosition: {fileID: 0}
 --- !u!50 &194937214
 Rigidbody2D:
@@ -171,7 +177,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.2
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -179,7 +185,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &194937215
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -246,6 +252,32 @@ Transform:
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &194937217
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194937212}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!61 &194937218
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -410,7 +442,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &1543377258
 SpriteRenderer:
