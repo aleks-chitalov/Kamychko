@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyLogic : MonoBehaviour
+public class SquareEnemy : Enemy
 {
     public float chaseRadius;
     public float attackRadius;
-    public float enemySpeed;
     public Transform targetPosition;
     private Rigidbody2D rb;
     // Start is called before the first frame update
@@ -29,8 +28,19 @@ public class EnemyLogic : MonoBehaviour
     {
         if(Vector3.Distance(targetPosition.position, transform.position) <= chaseRadius && Vector3.Distance(targetPosition.position, transform.position) > attackRadius)
         {
-            Vector2 temp = Vector2.MoveTowards(transform.position, targetPosition.position, enemySpeed * Time.fixedDeltaTime);
+            if (currentState == EnemyState.idle || currentState == EnemyState.walk)
+            {
+            ChangeState(EnemyState.walk);
+            Vector2 temp = Vector2.MoveTowards(transform.position, targetPosition.position, enemyMoveSpeed * Time.fixedDeltaTime);
             rb.MovePosition(temp);
+            }
         }
-    }   
+    }
+    void ChangeState(EnemyState newState)
+    {
+        if (currentState != newState)
+        {
+            currentState = newState;
+        }
+    }  
 }
