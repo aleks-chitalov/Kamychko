@@ -22,7 +22,7 @@ ExportedObj/
 *.csproj
 *.unityproj
 *.sln
-*.log
+**/*.log
 *.suo
 *.tmp
 *.user
