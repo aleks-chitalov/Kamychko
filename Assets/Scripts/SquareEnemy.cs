@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SquareEnemy : Enemy
 {
-    public float chaseRadius;
-    public float attackRadius;
-    public Transform targetPosition;
+    [SerializeField] private float chaseRadius;
+    [SerializeField] private float attackRadius;
+    private Transform targetPosition;
     private Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()

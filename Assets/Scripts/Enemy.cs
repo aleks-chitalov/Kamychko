@@ -11,12 +11,12 @@ public enum EnemyState
 }
 public class Enemy : MonoBehaviour
 {
-    public EnemyState currentState;
-    public float enemyMaxHealth;
-    public float enemyHealth;
-    public string enemyName;
-    public int enemyBaseAttack;
-    public float enemyMoveSpeed;
+    [SerializeField] public EnemyState currentState;
+    [SerializeField] private float enemyMaxHealth;
+    [SerializeField] private float enemyHealth;
+    [SerializeField] private string enemyName;
+    [SerializeField] private int enemyBaseAttack;
+    [SerializeField] public float enemyMoveSpeed;
 
     private void Awake()
     {
