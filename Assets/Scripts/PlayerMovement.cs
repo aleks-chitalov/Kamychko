@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {    
-    public enum States {stunned, normal}
+    public enum States {stunned, normal, dashing}
     public bool readyDash;
     States playerState;
     public float moveSpeed = 5f;
@@ -38,9 +38,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyUp("space") && readyDash)
         {
             StartCoroutine(DashCoroutine());
-        }
-        
-
+        }       
     }
 
     private void FixedUpdate()
@@ -53,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator DashCoroutine()
     {        
-       
+        playerState = States.dashing;
         rb.velocity = dashDirection * dashSpeed * Mathf.Clamp(chargeTime,1,3f);
         readyDash = false;
         yield return new WaitForSeconds(0.3f);
@@ -74,5 +72,16 @@ public class PlayerMovement : MonoBehaviour
         dashDirection = new Vector2(0, 0);
     }
     
-    
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Rigidbody2D hit = collision.GetComponent<Rigidbody2D>();
+            if(hit.CompareTag("Enemy"))
+            {
+                hit.GetComponent<Enemy>().EnemyStagger(1f);
+                hit.GetComponent<Enemy>().TakeDamage(1f);
+            }
+        }
+    }
 }
