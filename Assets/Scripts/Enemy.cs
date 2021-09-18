@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
         enemyHealth -= damage;
         if (enemyHealth <= 0)
         {
-            gameObject.SetActive(true);
+            gameObject.SetActive(false);
         }
     }
     public void EnemyStagger(float staggerTime)
